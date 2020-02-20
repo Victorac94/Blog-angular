@@ -1,0 +1,77 @@
+<a class="my-button navigate-to" [routerLink]="['/blog']">Ver posts</a>
+<form [formGroup]="form" (ngSubmit)="enviarFormulario(form.value)">
+    <div class="form-group">
+        <label for="titulo">Titulo*</label>
+        <input type="text" class="form-control" id="titulo" aria-describedby="titulo" autofocus
+            placeholder="Titulo del post" formControlName="titulo">
+        <small class="form-text error" *ngIf="form.controls.titulo.errors?.required && form.controls.titulo.touched">
+            Es necesario un título.
+        </small>
+        <small class="form-text error"
+            *ngIf="(form.controls.titulo.errors?.minlength || form.controls.titulo.errors?.maxlength) && form.controls.titulo.touched">
+            El valor de titulo debe estar entre 3 y 30 caracteres.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="autor">Autor*</label>
+        <input type="text" class="form-control" id="autor" aria-describedby="autor" placeholder="Nombre del autor"
+            formControlName="autor">
+        <small class="form-text error" *ngIf="form.controls.autor.errors?.required && form.controls.autor.touched">
+            Es necesario un autor.
+        </small>
+        <small class="form-text error"
+            *ngIf="(form.controls.autor.errors?.minlength || form.controls.autor.errors?.maxlength) && form.controls.autor.touched">
+            El valor de autor debe estar entre 3 y 30 caracteres.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="categoria">Categoria*</label>
+        <select class="form-control col-4" id="categoria" formControlName="categoria">
+            <option value="viajes">Viajes</option>
+            <option value="moda">Moda</option>
+            <option value="deportes">Deportes</option>
+            <option value="electronica">Electrónica</option>
+            <option value="videojuegos">Videojuegos</option>
+        </select>
+        <small class="form-text error"
+            *ngIf="form.controls.categoria.errors?.required && form.controls.categoria.touched">
+            Elige una categoria.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="imagen-local">Subir imagen</label>
+        <input type="file" class="form-control" id="imagen-local" aria-describedby="texto" name="imagenLocal"
+            accept="image/*" formControlName="imagenLocal">
+    </div>
+    <div class="form-group">
+        <label for="imagen">O URL de imagen</label>
+        <input type="text" class="form-control" id="imagen" aria-describedby="texto" name="imagen"
+            formControlName="imagen">
+        <small class="form-text error" *ngIf="form.controls.imagen.errors?.pattern">
+            URL incorrecta. Asegúrate de que proviene de un sitio seguro (https) y termina en alguno de los siguientes
+            formatos: png, jpg, jpeg, gif, png, svg.
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="texto">Texto*</label>
+        <textarea class="form-control" id="texto" aria-describedby="texto" resizable formControlName="texto"></textarea>
+        <small class="form-text error" *ngIf="form.controls.texto.errors?.required && form.controls.texto.touched">
+            Es necesario un texto.
+        </small>
+        <small class="form-text error"
+            *ngIf="(form.controls.autor.errors?.minlength || form.controls.autor.errors?.maxlength) && form.controls.autor.touched">
+            El texto del post debe estar entre 10 y 500 caracteres.
+        </small>
+    </div>
+    <div class="form-group">
+        <small class="form-text">
+            A fecha de {{fechaActual}}
+        </small>
+    </div>
+    <div class="form-group">
+        <small class="form-text">
+            *Los campos son requeridos
+        </small>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Enviar</button>
+</form>

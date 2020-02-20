@@ -1,0 +1,24 @@
+.my-button {
+    display: inline-block;
+    padding: 0.3em 0.5em;
+    margin: 1em 0.5em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.navigate-to {
+    background-color: rgb(208, 246, 255);
+}
+
+.navigate-to:hover {
+    color: #007bff;
+    background-color: rgb(180, 239, 255);
+}
+
+.error {
+    color: red;
+}
+
+select {
+    border: 1px solid #4b6cff;
+}
