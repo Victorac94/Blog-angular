@@ -23,7 +23,7 @@ export class BlogComponent implements OnInit {
   toggleMostrar(event) {
     const parent = event.target.parentElement;
     const toggleButtons = parent.querySelectorAll('.toggle-show');
-    console.log(toggleButtons);
+
     if (!parent.classList.contains('mostrar-mas')) {
       parent.classList.add('mostrar-mas');
       toggleButtons[0].style.display = 'none';
@@ -45,18 +45,5 @@ export class BlogComponent implements OnInit {
       category = event.target.value;
     }
     this.posts = this.postService.getPostsByCategoria(category);
-  }
-
-  sanitizeImage(image) {
-    const reader = new FileReader();
-
-    reader.onloadend = function () {
-      image = reader.result;
-    }
-
-    reader.readAsDataURL(image);
-
-    return image;
-    // return this.postService.sanitizeImgUrl(image);
   }
 }

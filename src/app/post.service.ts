@@ -9,8 +9,10 @@ import { Post } from './model/Post';
 export class PostService {
 
   arrPosts: Post[];
+  imageURL: string;
 
   constructor(private sanitizer: DomSanitizer) {
+    this.imageURL = null;
     this.arrPosts = [
       {
         titulo: 'Mercado navideño Salzburgo',
@@ -72,18 +74,24 @@ export class PostService {
   }
 
   agregarPost(post): void {
-    const nuevoPost = { ...post };
+    const nuevoPost = { ...post, imagenLocal: this.imageURL };
+    console.log(nuevoPost);
     this.arrPosts = [nuevoPost, ...this.arrPosts];
 
     localStorage.setItem('arrPostsBlog', JSON.stringify(this.arrPosts));
   }
 
   getAllPosts(): Post[] {
-    return JSON.parse(localStorage.getItem('arrPostsBlog')) || this.arrPosts;
+    this.arrPosts = JSON.parse(localStorage.getItem('arrPostsBlog')) || this.arrPosts;
+    return this.arrPosts;
   }
 
   getPostsByCategoria(categoria): Post[] {
     return this.arrPosts.filter(post => categoria === 'all' ? post : post.categoria === categoria);
+  }
+
+  getDownloadURLImage(url) {
+    this.imageURL = url;
   }
 
   sanitizeImgUrl(imageUrl: string): SafeUrl {

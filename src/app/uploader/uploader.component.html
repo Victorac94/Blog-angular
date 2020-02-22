@@ -1,0 +1,10 @@
+<div class="dropzone" dropzone (hovered)="toggleHover($event)" (dropped)="onDrop($event.dataTransfer.files)"
+    [class.hovering]="isHovering">
+    <p>Arrastra una imagen o haz click aquí</p>
+    <input type="file" accept="image/*" (change)="onDrop($event.target.files)">
+</div>
+<p class="error" *ngIf="incorrectFileType">Sólo se permiten imágenes</p>
+
+<div *ngFor="let file of files">
+    <upload-task [file]="file"></upload-task>
+</div>

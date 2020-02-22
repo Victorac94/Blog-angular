@@ -42,9 +42,7 @@
         <label for="imagen-local">Subir imagen</label>
         <!-- <input type="file" class="form-control" id="imagen-local" aria-describedby="texto" name="imagenLocal"
             accept="image/*" formControlName="imagenLocal"> -->
-        <ngx-file-picker #uploader name="imagenLocal" [adapter]="adapter" [uploadType]="'single'" [accept]="'image/*'"
-            [enableCropper]="true" [cropperOptions]="cropperOptions">
-        </ngx-file-picker>
+        <uploader></uploader>
     </div>
     <div class="form-group">
         <label for="imagen">O URL de imagen</label>
