@@ -1,3 +1,12 @@
+/* .form-group:first-child,
+.form-group:nth-child(2),
+.form-group:nth-child(3),
+.form-group:nth-child(4) {
+    display: inline-block;
+    width: 45%;
+    margin-right: 5%;
+} */
+
 .my-button {
     display: inline-block;
     padding: 0.3em 0.5em;

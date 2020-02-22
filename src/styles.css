@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    min-height: 100vh;
+    background: linear-gradient(rgb(156, 166, 255), rgb(156, 215, 255));
+}
+
+.container {
+    max-width: 750px;
+    padding: 0 2em;
+    padding-bottom: 2em;
+    background-color: white;
+}

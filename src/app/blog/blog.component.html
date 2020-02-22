@@ -1,7 +1,7 @@
 <section>
     <a class="my-button navigate-to" [routerLink]="['/new']">Crear Post</a>
     <select class="my-button filtro" (input)="filtroCategoria($event)">
-        <option value="">Mostrar todo</option>
+        <option value="all">Mostrar todo</option>
         <option value="viajes">Viajes</option>
         <option value="moda">Moda</option>
         <option value="deportes">Deportes</option>
@@ -9,23 +9,21 @@
         <option value="videojuegos">Videojuegos</option>
     </select>
     <article class="card" *ngFor="let post of posts">
-        <div [ngClass]="{'article-wrapper': true, 'mostrar-mas': mostrando}">
+        <div class="article-wrapper">
             <div class="card-body">
                 <h2 class="card-title">{{post.titulo}}</h2>
                 <h3 class="autor">Por <span>{{post.autor}}</span></h3>
-                <h4 [ngClass]="['categoria', post.categoria]">{{post.categoria}}</h4>
+                <h4 [ngClass]="['categoria', post.categoria]" (click)="filtroCategoria($event)">{{post.categoria}}</h4>
                 <small class="text-muted fecha">{{post.fecha}}</small>
             </div>
             <div class="img-wrapper">
-                <img [src]="post.imagenLocal || post.imagen" [alt]="'Imagen de ' + post.title">
+                <img [src]="post.imagenLocal || post.imagen" [alt]="'Imagen de ' + post.titulo">
             </div>
             <div class="card-body">
                 <p class="card-text">{{post.texto}}</p>
             </div>
-            <span class="toggle-show" *ngIf="!mostrando; else mostrarMenos" (click)="toggleMostrar()">Mostrar más</span>
-            <ng-template #mostrarMenos>
-                <span class="toggle-show" (click)="toggleMostrar()">Mostrar menos</span>
-            </ng-template>
+            <span class="toggle-show" (click)="toggleMostrar($event)">Mostrar más</span>
+            <span class="toggle-show" (click)="toggleMostrar($event)">Mostrar menos</span>
         </div>
     </article>
 </section>

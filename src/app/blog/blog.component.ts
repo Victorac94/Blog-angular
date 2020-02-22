@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Post } from '../model/Post';
 import { PostService } from '../post.service';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-blog',
@@ -10,22 +11,52 @@ import { PostService } from '../post.service';
 export class BlogComponent implements OnInit {
 
   posts: Post[];
-  mostrando: boolean;
 
   constructor(private postService: PostService) {
     this.posts = [];
-    this.mostrando = false;
   }
 
   ngOnInit(): void {
     this.posts = this.postService.getAllPosts();
   }
 
-  toggleMostrar() {
-    this.mostrando = !this.mostrando;
+  toggleMostrar(event) {
+    const parent = event.target.parentElement;
+    const toggleButtons = parent.querySelectorAll('.toggle-show');
+    console.log(toggleButtons);
+    if (!parent.classList.contains('mostrar-mas')) {
+      parent.classList.add('mostrar-mas');
+      toggleButtons[0].style.display = 'none';
+      toggleButtons[1].style.display = 'block';
+    } else {
+      parent.classList.remove('mostrar-mas');
+      toggleButtons[0].style.display = 'block';
+      toggleButtons[1].style.display = 'none';
+    }
   }
 
   filtroCategoria(event) {
-    this.posts = this.postService.getPostsByCategoria(event.target.value);
+    let category;
+
+    if (!event.target.value) {
+      category = event.target.innerText;
+      document.querySelector('select').value = category;
+    } else {
+      category = event.target.value;
+    }
+    this.posts = this.postService.getPostsByCategoria(category);
+  }
+
+  sanitizeImage(image) {
+    const reader = new FileReader();
+
+    reader.onloadend = function () {
+      image = reader.result;
+    }
+
+    reader.readAsDataURL(image);
+
+    return image;
+    // return this.postService.sanitizeImgUrl(image);
   }
 }
