@@ -8,12 +8,9 @@ export class DropzoneDirective {
   @Output() dropped = new EventEmitter<FileList>();
   @Output() hovered = new EventEmitter<boolean>();
 
-  // @HostListener('click', [])
-
   @HostListener('drop', ['$event'])
   onDrop($event) {
     $event.preventDefault();
-    console.log($event);
     this.dropped.emit($event);
     this.hovered.emit(false);
   }

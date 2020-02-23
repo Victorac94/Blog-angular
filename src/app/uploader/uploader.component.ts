@@ -5,6 +5,9 @@ import { Component } from '@angular/core';
   templateUrl: './uploader.component.html',
   styleUrls: ['./uploader.component.scss']
 })
+
+// TODO: Añadir Cropper.js
+
 export class UploaderComponent {
 
   isHovering: boolean;
@@ -22,9 +25,9 @@ export class UploaderComponent {
   }
 
   onDrop(files: FileList) {
-    // Reset files array to only contain last dropped image
     console.log(files.item(0));
     if (files.item(0).type.includes('image/')) {
+      // Reset files array to only contain last dropped image
       this.files = [files.item(0)];
       this.incorrectFileType = false;
     } else {

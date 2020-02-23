@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { PostService } from '../post.service';
 
+//TODO: Añadir modal con la imagen en grande al hacer click sobre el preview de la imagen que acabamos de subir
+
 @Component({
   selector: 'upload-task',
   templateUrl: './upload-task.component.html',

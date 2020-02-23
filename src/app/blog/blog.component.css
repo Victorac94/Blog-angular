@@ -17,8 +17,35 @@
 
 .filtro {
     border: none;
-    color: rgb(104, 230, 0);
+    color: rgb(96, 212, 0);
     background-color: rgb(216, 255, 190);
+}
+
+.filtro:hover {
+    background-color: rgb(199, 255, 162);
+}
+
+.busqueda {
+    border: 1px solid rgb(152, 200, 255);
+    border-radius: 5px;
+    padding: 0.2em 0.5em;
+    margin: 1em 0.5em;
+    color: rgb(126, 126, 126);
+}
+
+.busqueda::placeholder {
+    color: rgb(177, 177, 177);
+}
+
+.busqueda:hover,
+.ordernar:hover {
+    border-color:rgb(100, 172, 255);
+}
+
+.ordenar {
+    color: rgb(126, 126, 126);
+    border: 1px solid rgb(152, 200, 255);
+    padding: 0.2em 0.5em;
 }
 
 article {

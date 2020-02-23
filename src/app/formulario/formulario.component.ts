@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { PostService } from '../post.service';
-
 
 @Component({
   selector: 'app-formulario',
@@ -19,7 +18,7 @@ export class FormularioComponent implements OnInit {
     private postService: PostService,
     private router: Router
   ) {
-    this.fechaActual = new Date(Date.now()).toLocaleDateString();
+    this.fechaActual = new Date(Date.now()).toLocaleDateString().replace(/\//g, '-');
 
     this.form = new FormGroup({
       titulo: new FormControl('', [
@@ -52,7 +51,7 @@ export class FormularioComponent implements OnInit {
   }
 
   enviarFormulario(post) {
-    post.fecha = new Date(Date.now()).toLocaleDateString();
+    post.fecha = new Date(Date.now()).toLocaleDateString().replace(/\//g, '-');
     this.postService.agregarPost(post);
 
     this.router.navigate(['/blog']);

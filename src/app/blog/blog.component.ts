@@ -46,4 +46,12 @@ export class BlogComponent implements OnInit {
     }
     this.posts = this.postService.getPostsByCategoria(category);
   }
+
+  buscarPost(event) {
+    this.posts = this.postService.filtroBusqueda(event.target.value);
+  }
+
+  ordenarPor(value) {
+    this.posts = this.postService.orderBy(value.target.value);
+  }
 }

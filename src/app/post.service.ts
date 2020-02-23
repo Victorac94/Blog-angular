@@ -21,7 +21,7 @@ export class PostService {
         No es la primera vez que hablamos en nuestro blog sobre los mercadillos de Navidad en Austria. Si recuerdas publicamos una infografía que tuvo una gran aceptación con los datos más relevantes de los mercadillos de este país alpino. En concreto nos centramos en los de Viena, Salzburgo, Innsbruck, Graz y Linz. Aunque muchos de los datos que allí aparecen siguen siendo vigentes, nos ha parecido oportuno publicar un nuevo post actualizando parte de aquellos datos y ampliando la información con otras actividades que se pueden realizar aprovechando un viaje a Salzburgo en la época de Adviento.`,
         autor: 'Victor Antunez',
         imagen: 'https://www.bolsasocialenher.com/ImgCli/innsbruck001.jpg',
-        fecha: '13-2-2020',
+        fecha: '13-02-2020',
         categoria: 'viajes'
       },
       {
@@ -33,7 +33,7 @@ export class PostService {
         Y pese a que resulta difícil imaginar a Greta Thunberg con un Versace del 93, no es ningún secreto que este auge del sector está directamente relacionado con la omnipresente sostenibilidad. Un tsunami que ya en los 2000 coqueteó con la industria -el trabajo de la firma Imitation of Christ o el diseñador Miguel Adrover así lo reflejan- pero que, en 2019, ha conseguido al fin poner en cuestión los mecanismos inherentes a la moda. Y, más importante, implantar nuevas prioridades en el consumidor.`,
         autor: 'Laura Gómez',
         imagen: 'https://www.esme.es/wp-content/uploads/2019/04/pasos-coleccion-moda.jpg',
-        fecha: '14-2-2020',
+        fecha: '01-01-2020',
         categoria: 'moda'
       },
       {
@@ -43,7 +43,7 @@ export class PostService {
         El proyecto se ha presentado esta mañana en el Pabellón Marqués de Samaranch con la presencia de la vicealcaldesa de Madrid, Begoña Villacís y la Concejala del Área de Deporte del Ayuntamiento de Madrid, Sofía Miranda.`,
         autor: 'Rafael Nadal',
         imagen: 'https://as01.epimg.net/deportes_accion/imagenes/2020/02/19/urbano/1582133166_208558_1582134141_noticia_normal.jpg',
-        fecha: '21-2-2020',
+        fecha: '20-08-2019',
         categoria: 'deportes'
       },
       {
@@ -55,7 +55,7 @@ export class PostService {
         El fabricante californiano ya ha sorprendido a muchos equipos de ingeniería con su forma y su tecnología de fabricación. En 2018, la firma Munro & Associates, que desmonta coches pieza a pieza, advirtió que el coche agrupa la mejor tecnología montada por ningún eléctrico en el mundo. Ese mismo año, la consultora americana UBS desmontó una unidad de la versión “Long Range” del Model 3 para advertir que la versión “Standard”, la más básica que Tesla pretende vender por 35.000 dólares, no sería rentable para la empresa.`,
         autor: 'Elon Musk',
         imagen: 'https://d500.epimg.net/cincodias/imagenes/2019/07/25/motor/1564067918_275569_1564067966_noticia_normal.jpg',
-        fecha: '20-4-2020',
+        fecha: '20-04-2019',
         categoria: 'electronica'
       },
       {
@@ -67,7 +67,7 @@ export class PostService {
         Este hecho abre la puerta a que paulatinamente los juegos de corte más clásico tengan su hueco en la corriente actual de videojuegos retransmitidos en plataormas de streaming, algo que los amantes de los juegos no digitales agradecerán.`,
         autor: 'Carl Magnusen',
         imagen: 'https://s1.eestatic.com/2018/12/31/invertia/Invertia_364976004_145385387_1706x960.jpg',
-        fecha: '10-1-2020',
+        fecha: '19-03-2019',
         categoria: 'videojuegos'
       },
     ];
@@ -75,7 +75,6 @@ export class PostService {
 
   agregarPost(post): void {
     const nuevoPost = { ...post, imagenLocal: this.imageURL };
-    console.log(nuevoPost);
     this.arrPosts = [nuevoPost, ...this.arrPosts];
 
     localStorage.setItem('arrPostsBlog', JSON.stringify(this.arrPosts));
@@ -90,11 +89,66 @@ export class PostService {
     return this.arrPosts.filter(post => categoria === 'all' ? post : post.categoria === categoria);
   }
 
+  filtroBusqueda(searchValue) {
+    searchValue = this.simplifyText(searchValue);
+    return this.arrPosts.filter(post => this.simplifyText(post.titulo).includes(searchValue) || this.simplifyText(post.autor).includes(searchValue))
+  }
+
+  orderBy(value) {
+    const myArr = [];
+
+    if (value === 'antiguo') { // Antiguos primero
+      this.arrPosts.forEach((post, j) => {
+        if (j === 0) {
+          myArr.unshift(post);
+        } else {
+          const fecha = post.fecha.split('-').reverse().join('');
+
+          // Order myArr posts by date
+          for (let i = 0; i < this.arrPosts.length; i++) {
+            // If current post date is newer than the post of myArr we are currently checking, then insert current post in it's place
+            if (fecha < myArr[i].fecha.split('-').reverse().join('')) {
+              myArr.splice(i, 0, post);
+              break;
+            } else if (i === myArr.length - 1) {
+              myArr.push(post);
+              break;
+            }
+          }
+        }
+      });
+    } else { // Recientes primero
+      this.arrPosts.forEach((post, j) => {
+        if (j === 0) {
+          myArr.unshift(post);
+        } else {
+          const fecha = post.fecha.split('-').reverse().join('');
+
+          // Order myArr posts by date
+          for (let i = 0; i < this.arrPosts.length; i++) {
+            // If current post date is newer than the post of myArr we are currently checking, then insert current post in it's place
+            if (fecha > myArr[i].fecha.split('-').reverse().join('')) {
+              myArr.splice(i, 0, post);
+              break;
+            } else if (i === myArr.length - 1) {
+              myArr.push(post);
+              break;
+            }
+          }
+        }
+      })
+    }
+    return myArr;
+  }
+
+  // Remove diacritics and transform text to lower case
+  simplifyText(text) {
+    const textCopy = text;
+    return textCopy.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  }
+
   getDownloadURLImage(url) {
     this.imageURL = url;
   }
 
-  sanitizeImgUrl(imageUrl: string): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
-  }
 }
